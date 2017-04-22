@@ -1,0 +1,52 @@
+#include <iostream>
+
+using namespace std;
+
+static int mineField[101][101] = {0};
+
+int main(){
+	char input[101][101];
+	int m,n field_count = 0;
+	while(cin >> n >> m){
+		if(m != 0 || n != 0){
+			for (int i = 0; i < n; i++){
+				for (int j = 0; j < m; j++){
+					cin >> input[i][j];
+					if (input [i][j] == '*'){
+						if (i >= 1 && j >= 1)
+							mineField[i-1][j-1]++;
+						if (i >= 1)
+							mineField[i-1][j]++;
+						if (i >=1 && j+1<m)
+							mineField[i-1][j+1]++;
+						if(j>=1)
+							mineField[i][j-1]++;
+						if (i+1 < n && j>=1)
+							mineField[i+1][j-1]++;
+						if (j+1 <m)
+							mineField[i][j+1]++;
+						if (i+1 < n)
+							mineField[i+1][j]++;
+						if (i+1 <n && j+1< m)
+						    mineField[i+1][j+1]++;
+					}
+				}
+			}
+			if (field_count)
+				cout << "\n";
+			cout << "Field #" << ++field_count << ":" << endl;
+			for (int i = 0; i < n; i++){
+				for (int j = 0; j < m; j++){
+					if (input[i][j] == '*')
+						cout << input[i][j];
+					else
+						cout << mineField[i][j];
+					mineField[i][j] = 0;
+				}
+				cout << endl;
+			}
+		}
+		else break;
+	}
+	return 0;
+}
